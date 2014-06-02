@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+
+<head>
+    <title>Heap Overflow</title>
+    <link href="../static/bootstrap/css/bootstrap.min.css" rel="Stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../static/style.css" />
+    {% if redir_href %}
+        <script type="text/javascript">
+            location.replace("{{ redir_href }}");
+        </script>
+    {% endif %}
+</head>
+
+<body class="backgrclr">
+{% if anchor %}
+    <a href="#{{ anchor }}" class="anchor"></a>
+{% endif %}
+<!--------------------------SIGNIN OVERLAY---------------------------->
+    <div id="SigninOverlay" class="modal hide">
+        <div class="modal-body" style="background-color:azure">
+            <form class="well" style="background-color:white" method="post" action="signin">
+                {% if signin_error %}
+                    <p><font size="4" style="color: #FF0000">{{ signin_error }}</font></p>
+                {% endif %}
+                {% csrf_token %}
+                {{ signin_form.as_p }}
+                <p><button type="submit" class="btn btn-success">Sign in</button></p>
+            </form>
+        </div>
+    </div>
+<!----------------------SIGNIN OVERLAY END---------------------------->
+<!--------------------------SIGNUP OVERLAY---------------------------->
+    <div id="SignupOverlay" class="modal hide">
+        <div class="modal-body" style="background-color:azure">
+            <form class="well" style="background-color:white" method="post" action="signup">
+                {% if signup_error %}
+                    <p><font size="4" style="color: #FF0000">{{ signup_error }}</font></p>
+                {% endif %}
+                {% csrf_token %}
+                {{ signup_form.as_p }}
+                <p><button type="submit" class="btn btn-success">Sign up</button></p>
+            </form>
+        </div>
+    </div>
+<!----------------------SIGNUP OVERLAY END---------------------------->
+<!--------------------------ASK OVERLAY---------------------------->
+    <div id="AskOverlay" class="modal hide">
+        <div class="modal-body" style="background-color:azure">
+            <form class="well" style="background-color:white" method="post" action="ask">
+                {% if ask_error %}
+                  <p><font size="4" style="color: #FF0000">{{ ask_error }}</font></p>
+                {% endif %}
+                {% csrf_token %}
+                {{ ask_form.as_p }}
+                <p><button type="submit" class="btn btn-success">Ask!</button></p>
+            </form>
+        </div>
+    </div>
+<!----------------------ASK OVERLAY END---------------------------->
+<!----------------------------TOP------------------------------>  
+    <script type="text/javascript" src="../static/myscript.js"></script>
+    <script src="../static/bootstrap/js/bootstrap.min.js"></script>
+
+    <div class="navbar navbar-static-top">
+        <div class="navbar-inner">
+            <a class="brand" href="/">HeapOverflow</a>
+            <a class="brand" href="/?sort_by=popular" style="color: {% if sort_by == "popular" %}#FF0000{% endif %}">Popular</a>
+            <a class="brand" href="/?sort_by=news" style="color: {% if sort_by == "news" %}#FF0000{% endif %}">News</a>
+
+            <div class="container" style="width:auto">
+                <ul class="nav pull-right">
+                    <!--li>
+                    <form class="navbar-search pull-left" action="">
+                        <input type="text" class="search-query span2" placeholder="Search">
+                        <input type="submit" value="">
+                    </form>
+                    </li-->
+                    <li class="divider-vertical"></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="/user?id={{ user.id }}">{{ user.username }}</a></li>
+                        <li class="divider-vertical"></li>
+                        <li><a href="signout">Sign out</a></li>
+                    {% else %}
+                        <li><a data-toggle="modal" href="#SigninOverlay" class="SigninOverlayOpen">Sign in</a></li>
+                        <li class="divider-vertical"></li>
+                        <li><a data-toggle="modal" href="#SignupOverlay" class="SignupOverlayOpen">Sign up</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+<!--------------------------TOP END---------------------------->
+<!----------------------MAIN BLOCK----------------------------->
+    <div class="container-fluid " id="General" >
+        <div class="row-fluid ">
+            <div class="span9 general">
+<!----------------------PAGE NAVYGATION & ASK----------------------------->
+            <ul class="nav nav-tabs">
+                {% if link_to_pages_jump_left %}
+                    <li> <a href="?{% if que %}id={{ que.question.id }}&{% endif %}page=1{% if sort_by %}&sort_by={{ sort_by }}{% endif %}"><-</a></li>
+                {% endif %}
+                {% for x in link_to_pages %}
+                      <li> <a href="?{% if que %}id={{ que.question.id }}&{% endif %}page={{ x }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}" style="{% if x == current_page_number %}color: #000000{% endif %}">{{ x }}</a></li>
+                {% endfor %}
+                {% if link_to_pages_jump_right %}
+                    <li> <a href="?{% if que %}id={{ que.question.id }}&{% endif %}page={{ count_of_pages }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">-></a></li>
+                {% endif %}
+                {% if user.is_authenticated %}
+                    <li class="pull-right"><a class="btn btn-large AskOverlayOpen" data-toggle="modal" href="#AskOverlay">Ask!</a></li>
+                {% endif %}
+            </ul>
+<!----------------------PAGE NAVYGATION & ASK END------------------------->
+                <div class="tab-content " id="mytab">
+<!------------------------CONTENT------------------------------>
+                    <div class="container-fluid " id="Div2">
+                        {% if errcode %}
+                            <br/>
+                            <font size="6"><b>Error {{ errcode }}</b> - {{ errmsg }}</font>
+                            <br/>
+                            <br/>
+                        {% endif %}
+                        {% if import_from %}
+                            {% include import_from %}
+                        {% endif %}
+                        <br />
+                    </div>
+<!---------------------CONTENT END----------------------------->
+                </div> <!--CLOSE <div class="tab-content " id="mytab"> -->
+            </div> <!--CLOSE <div class="span9 general"> -->
+<!-----------------------TAGS---------------------------------->
+        <br />
+        <div class="span3 general">
+            <div class="container-fluid " style=text-align:center >
+                <h5>Last signed up users: </h5>
+                {% for usr in last_signedup_users %}
+                    <a href="/user?id={{ usr.id }}">{{ usr.username }}</a> <br/>
+                {% endfor %}
+                <br/>
+            </div>
+        </div>
+<!-----------------------TAGS END------------------------------>
+        </div> <!--CLOSE <div class="row-fluid "> -->
+    </div> <!--CLOSE <div class="container-fluid " id="General" > -->
+
+    <br />
+    <div class="text-center">
+    <h5>
+        made by Ksan <br />
+        at Nov. 2013
+    </h5>
+    </div>
+    <br />
+
+<script>
+    {% if overlay %}
+        document.querySelector(".{{ overlay }}OverlayOpen").click()
+    {% endif %}
+    {% if anchor %}
+        document.querySelector(".anchor").click()
+    {% endif %}
+</script>
+
+</body>
+</html>

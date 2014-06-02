@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+
+<head>
+  <title>Heap Overflow</title>
+  <link href="../static/bootstrap/css/bootstrap.min.css" rel="Stylesheet" />
+  <link rel="stylesheet" type="text/css" href="../static/style.css" />
+</head>
+
+<body class="backgrclr">
+<!----------------------------TOP------------------------------>  
+  <script type="text/javascript" src="../static/myscript.js"></script>
+  <script src="../static/bootstrap/js/bootstrap.min.js"></script>
+
+  <div class="navbar navbar-static-top ">
+    <div class="navbar-inner">
+      <a class="brand" href="/">Heap Overflow</a>
+      <div class="container" style="width:auto">
+        <ul class="nav pull-right">
+          <li>
+            <form class="navbar-search pull-left" action="">
+              <input type="text" class="search-query span2" placeholder="Search">
+              <input type="submit" value="">
+            </form>
+          </li>
+          <li class="divider-vertical"></li>
+          <li><a href="#">log in</a></li>
+        </ul>
+      </div> 
+    </div>
+  </div>
+<!--------------------------TOP END----------------------------> 
+<!--------------------------OVERLAY---------------------------->
+  <div id="WNDmodal" class="modal hide">
+    <!-- 
+    <div class="modal-header" style="background-color:azure">
+      <h2></h2>
+    </div> -->
+    <div class="modal-body" style="background-color:azure">
+      <form class="well" style="background-color:white">
+        <p>Тема</p>
+        <input type="text" class="span6">
+        <p>Вопрос</p>
+        <textarea rows="3" class="span6"></textarea>
+        <p>Теги</p>
+        <input type="text" class="span6">
+        <div class="modal-footer">
+          <a data-toggle="modal" href="#WNDmodal" class="btn btn-success">Ask</a>
+          <a data-toggle="modal" href="#WNDmodal" class="btn">Close</a>
+        </div>
+      </form>
+    </div>
+  </div>
+<!----------------------OVERLAY END---------------------------->
+<!----------------------MAIN BLOCK----------------------------->
+  <div class="container-fluid " id="General" >
+    <div class="row-fluid ">
+      <div class="span9 general">
+<!----------------------NAVYGATION----------------------------->
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#WNDpopular" id="popular" data-toggle="tab">Popular</a></li>
+          <li><a href="#WNDnews" id="new" data-toggle="tab">New</a></li>
+          <li class="pull-right"><a class="btn btn-large" data-toggle="modal" href="#WNDmodal">Ask!</a></li>
+        </ul>
+<!----------------------NAVYGATION END------------------------->
+        <div class="tab-content " id="mytab">
+<!------------------------POPULAR------------------------------>
+          <div class="tab-pane active" id="WNDpopular">
+            <div class="container-fluid " id="Div2">
+              <div class="row-fluid ">
+                <div class="container-fluid general "> 
+                  <div class="span3">
+                    <p>
+                    <div class="span3 ">
+                        <div class="btn-group btn-group-vertical span8">
+                            <a href="#" class = "btn btn-small"><i class = "icon-chevron-up"></i> </a>
+                            <h3 style = "text-align:center" >15</h3>
+                            <a href = "#" class = "btn btn-small"><i class = "icon-chevron-down"></i> </a>
+                        </div>
+                    </div>
+                    </p>
+                  </div>
+                  <div class="span9">
+                    <h2> !title! </h2>
+                    <p> !text! </p>
+                    <a> Прочитать ответы (n) </a> | <a> Ответы </a>  |  <a> ksan@ksan  </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> 
+<!---------------------POPULAR END----------------------------->
+<!-----------------------NEWS---------------------------------->
+          <div class="tab-pane" id="WNDnews">
+            <div class="container-fluid " id="Div4">
+              <div class="row-fluid ">
+                <div class="container-fluid general span"> 
+                  <div class="span3">
+                    <p>
+                    <div class="input-append"> 
+                      <input class="span4" id="Number4" size="16" type="number"><span class="add-on"><i class=" icon-thumbs-up"></i></span>
+                    </div>
+                    </p>
+                  </div>
+                  <div class="span9">
+                    <h2> Ибн Хоттаб </h2>
+                    <p> 14 ноября с 16:00 до 18:00 в 502-ю ГУК мастер-класс «Яблочная разработка», который проведет Дмитрий Обухов (ABBYY). Мастер-класс может стать отправной точкой для начинающих разработчиков под Mac OS и iOS. Вы узнаете, как и с чего начать разрабатывать приложения для этих платформ и сделать это наиболее эффективно. В ходе мастер-класса будут освещены основные принципы и концепции разработки, средства разработки и отладки, а также будет множество примеров из реальных, крупных и не очень проектов. </p>
+                    <a> Прочитать ответы (1) </a> | <a> Ответы </a>  |  <a> Like </a>  |  <a> ksan@ksan  </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> 
+<!-----------------------NEWS END------------------------------>
+        </div> <!--CLOSE <div class="tab-content " id="mytab"> -->
+      </div> <!--CLOSE <div class="span9 general"> -->
+<!-----------------------TAGS---------------------------------->
+      <div class="span3 general mytags">
+        <div class="container-fluid " style=text-align:center >
+          <p>
+          <div id="tags">
+            <li>
+            <a class="tag-size-1" href="http://tp.mail.ru/tag/ABBYY/">ABBYY</a>
+            <a class="tag-size-10" href="http://tp.mail.ru/tag/C%2B%2B/">C++</a>
+            <a class="tag-size-2" href="http://tp.mail.ru/tag/django/">django</a>
+            <a class="tag-size-1" href="http://tp.mail.ru/tag/Google/"style="font-size:10px;>Google</a>
+            <a class="tag-size-5" href="http://tp.mail.ru/tag/HighLoad/">HighLoad</a>
+            <a class="tag-size-9" href="http://tp.mail.ru/tag/Java/">Java</a>
+            <a class="tag-size-6" href="http://tp.mail.ru/tag/Mail.Ru/">Mail.Ru</a>
+            <a class="tag-size-4" href="http://tp.mail.ru/tag/Microsoft/" style="font-size:21px;>Microsoft</a>
+            <a class="tag-size-2" href="http://tp.mail.ru/tag/Python/">Python</a>
+            <a class="tag-size-2" href="http://tp.mail.ru/tag/rcc/" style="font-size:19px;>rcc</a>
+            <a class="tag-size-2" href="http://tp.mail.ru/tag/UML/">UML</a>
+            <a class="tag-size-4" href="http://tp.mail.ru/tag/web-%D1%82%D0%B5%D1%85%D0%BD%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D0%B8/">web-технологии</a>
+            <a href="http://tp.mail.ru/tag/C%2B%2B/" style="font-size:19px;">C++</a>
+            <a href="http://tp.mail.ru/tag/django/" style="font-size:10px;">django</a>
+            <a href="http://tp.mail.ru/tag/Google/" style="font-size:21px;">google</a>
+            <a href="http://tp.mail.ru/tag/HighLoad/" style="font-size:10px;">HighLoad</a>
+            <a href="http://tp.mail.ru/tag/web-%D1%82%D0%B5%D1%85%D0%BD%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D0%B8/" style="font-size:21px;">WEB</a>
+            <a href="http://tp.mail.ru/tag/Python/" style="font-size:10px;">Python</a></li>
+          </div>
+          </p> 
+        </div>
+      </div>
+<!-----------------------TAGS END------------------------------>
+    </div> <!--CLOSE <div class="row-fluid "> -->
+  </div> <!--CLOSE <div class="container-fluid " id="General" > -->
+
+</body>
+</html>

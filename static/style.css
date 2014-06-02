@@ -1,0 +1,66 @@
+﻿li 
+{
+	list-style-type: none; /* Убираем маркеры */
+}
+
+.general
+{
+  	padding: 0px 0px 0px 0px;
+  	border: 1px solid #DDD;
+ 	background-color:white;
+}
+
+.backgrclr
+{
+    	background-color:ivory;
+}
+
+#first, #second
+{   
+      	border: medium none silver 
+}
+
+#new, #popular 
+{
+      	color: blue;
+     	font-family:Comic Sans MS;
+      	font-style:inherit;
+}
+
+input[type="submit"] 
+{
+	width: 20px; /* Ширина кнопки */
+    height: 20px; /* Высота кнопки */
+    border: none; /* Убираем рамку */
+    background: url(icon_search.png) no-repeat 50% 50%; /* Параметры фона */
+}
+
+
+.mybtnstyle
+{
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 5px;
+    padding-top: 5px;
+    margin-left: 10px;
+    margin-top: 10px;
+    width: 40%;
+}
+
+
+.full_width
+{
+    width: 95%;
+}
+
+
+.like
+{
+    margin-right: 70px;
+}
+
+
+.fixmeplz
+{
+	position: fixed;
+}

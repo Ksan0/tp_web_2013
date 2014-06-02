@@ -1,0 +1,49 @@
+{% for que in questions %}
+    <a name="que{{ que.question.id }}"></a>
+    <div class="row-fluid ">
+        <div class="container-fluid general">
+            <div class="span2">
+                <p>
+                <div class="container-fluid">
+                    <div class="btn-group btn-group-vertical span5">
+                        {% if user.is_authenticated and user != que.question.author %}
+                            {% if que.voice <= 0 %}
+                                <a href="qvoice?id={{ que.question.id }}&vtype=up" class = "full_width btn btn-small"><i class = "icon-chevron-up"></i> </a>
+                            {% endif %}
+                        {% endif %}
+                        <h3 style = "text-align:center" > {{ que.question.rate }} </h3>
+                        {% if user.is_authenticated and user != que.question.author %}
+                            {% if que.voice >= 0 %}
+                                <a href = "qvoice?id={{ que.question.id }}&vtype=down" class = "full_width btn btn-small" ><i class = "icon-chevron-down"></i> </a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+                </p>
+            </div>
+            <div class="span9">
+                <h4> <a style="color: #0000FF" href = "question?id={{ que.question.id }}">{{ que.question.title }}</a> by <a href = "user?id={{ que.question.author.id }}">{{ que.question.author }}</a></h4>
+                <p>
+                {{ que.question.text|slice:"80" }}
+                {% if que.question.text|length > 80 %}...{% endif %}
+                </p>
+                <b>{{ que.question.date }} <br/>
+                <p>views: {{ que.question.views }}</p></b>
+            </div>
+            <div class="span1">
+                {% if que.question.solved %}
+                    {% if user.is_authenticated and user == que.question.author %}
+                        <a href = "solved?id={{ que.question.id }}" class = "btn btn-success" style="margin-top: 10px; margin-left: 5px;"><i class = "icon-ok"></i> </a>
+                    {% else %}
+                        <div class="mybtnstyle btn-success"><i class="icon-ok"></i></div>
+                    {% endif %}
+                {% else %}
+                    {% if user.is_authenticated and user == que.question.author %}
+                        <a href = "solved?id={{ que.question.id }}" class = "btn" style="margin-top: 10px; margin-left: 5px;"><i class = "icon-ok"></i> </a>
+                    {% endif %}
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+{% endfor %}

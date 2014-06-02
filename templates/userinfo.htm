@@ -1,0 +1,56 @@
+<!----------------------------MAIN INFO------------------------------->
+Usernick: {{ user_about.username }} <br/>
+Mail: {{ user_about.email }} <br/>
+Rate: {{ userrate }} <br/>
+Signed up: {{ user_about.date_joined }} <br/>
+<br/>
+<!-------------------------------ASKED-------------------------------->
+{% if questions.count != 0 %}
+<div class="span11 general">
+    <div class="container-fluid " style=text-align:center >
+            <h3>Asked:</h3>
+    </div>
+</div>
+{% endif %}
+{% for que in questions %}
+<div class="span11 general">
+    <div class="container-fluid " style=text-align:left >
+        <div class="span2">
+            <br/>
+            <h3 style = "text-align:center; width: 80%;" > {{ que.rate }} </h3>
+        </div>
+        <div class="span9">
+            <h4><a style="" href="/question?id={{ que.id }}">{{ que.title }}</a></h4>
+            {{ que.text|linebreaks }}
+            {{ que.date }}
+        </div>
+    </div>
+    <br/>
+</div>
+{% endfor %}
+<!-------------------------------ANSWERED-------------------------------->
+{% if answers.count != 0 %}
+<div class="span11 general">
+    <div class="container-fluid " style=text-align:center >
+        <h3>Answered:</h3>
+    </div>
+</div>
+{% endif %}
+{% for ans in answers %}
+<div class="span11 general">
+    <div class="container-fluid " style=text-align:left >
+        <div class="span2">
+            <br/>
+            <h3 style = "text-align:center; width: 80%;" > {{ ans.rate }} </h3>
+        </div>
+        <div class="span9">
+            <h4><a style="" href="/question?id={{ ans.question.id }}&#ans{{ ans.id }}">{{ ans.question.title }}</a></h4>
+            {{ ans.text|linebreaks }}
+            {{ ans.date }}
+        </div>
+    </div>
+    <br/>
+</div>
+{% endfor %}
+
+<div class="span11"><!--Ohhh..Crutches--></div>

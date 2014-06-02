@@ -1,0 +1,103 @@
+<a name="que{{ que.question.id }}"></a>
+<div class="row-fluid ">
+    <div class="container-fluid general">
+        <div class="span2">
+            <p>
+            <div class="container-fluid">
+                <div class="btn-group btn-group-vertical span5">
+                    {% if user.is_authenticated and user != que.question.author %}
+                        {% if que.voice <= 0 %}
+                            <a href="qvoice?id={{ que.question.id }}&vtype=up" class = "full_width btn btn-small"><i class = "icon-chevron-up"></i> </a>
+                        {% endif %}
+                    {% endif %}
+                    <h3 style = "text-align:center" > {{ que.question.rate }} </h3>
+                    {% if user.is_authenticated and user != que.question.author %}
+                        {% if que.voice >= 0 %}
+                            <a href = "qvoice?id={{ que.question.id }}&vtype=down" class = "full_width btn btn-small" ><i class = "icon-chevron-down"></i> </a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            </p>
+        </div>
+        <div class="span9">
+            <h4> <a style="color: #0000FF" href = "question?id={{ que.question.id }}">{{ que.question.title }}</a> by <a href = "user?id={{ que.question.author.id }}">{{ que.question.author }}</a></h4>
+            <p>
+            {{ que.question.text|linebreaks }}
+            </p>
+            <b>{{ que.question.date }} <br/>
+            views: {{ que.question.views }}</b>
+        </div>
+        <div class="span1">
+            {% if que.question.solved %}
+                {% if user.is_authenticated and user == que.question.author %}
+                    <a href = "solved?id={{ que.question.id }}" class = "btn btn-success" style="margin-top: 10px; margin-left: 5px;"><i class = "icon-ok"></i> </a>
+                {% else %}
+                    <div class="mybtnstyle btn-success"><i class="icon-ok"></i></div>
+                {% endif %}
+            {% else %}
+                {% if user.is_authenticated and user == que.question.author %}
+                    <a href = "solved?id={{ que.question.id }}" class = "btn" style="margin-top: 10px; margin-left: 5px;"><i class = "icon-ok"></i> </a>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% for ans in answers %}
+<a name="ans{{ ans.answer.id }}"></a>
+<div class="row-fluid ">
+    <div class="container-fluid general">
+        <div class="span2">
+            <p>
+            <div class="container-fluid">
+                <div class="btn-group btn-group-vertical span5">
+                    {% if user.is_authenticated and user != ans.answer.author %}
+                        {% if ans.voice <= 0 %}
+                            <a href="avoice?id={{ ans.answer.id }}&vtype=up" class = "full_width btn btn-small"><i class = "icon-chevron-up"></i> </a>
+                        {% endif %}
+                    {% endif %}
+                        <h3 style="text-align: center" > {{ ans.answer.rate }} </h3>
+                    {% if user.is_authenticated and user != ans.answer.author %}
+                        {% if ans.voice >= 0 %}
+                            <a href = "avoice?id={{ ans.answer.id }}&vtype=down" class = "full_width btn btn-small" ><i class = "icon-chevron-down"></i> </a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            </p>
+        </div>
+        <div class="span9">
+            <h5> <a href = "/user?id={{ ans.answer.author.id }}">{{ ans.answer.author }}</a></h5>
+            <p> {{ ans.answer.text|linebreaks }} </p>
+            {{ ans.answer.date }}
+        </div>
+        <div class="span1">
+            {% if ans.answer.is_right %}
+                {% if user.is_authenticated and user == que.question.author and user != ans.answer.author %}
+                    <a href = "is_right?id={{ ans.answer.id }}" class = "btn btn-success" style="margin-top: 10px; margin-left: 5px;"><i class = "icon-ok"></i> </a>
+                {% else %}
+                    <div class="mybtnstyle btn-success"><i class="icon-ok"></i></div>
+                {% endif %}
+            {% else %}
+                {% if user.is_authenticated and user == que.question.author and user != ans.answer.author %}
+                    <a href = "is_right?id={{ ans.answer.id }}" class = "btn" style="margin-top: 10px; margin-left: 5px;"><i class = "icon-ok"></i> </a>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+{% if user.is_authenticated %}
+    <a name="answer_field"></a>
+    <form class="well" style="background-color:white" method="post" action="answer?id={{ que.question.id }}">
+        {% if answer_error %}
+            <font size="4" style="color: #FF0000; right: 0px;">{{ answer_error }}</font><br />
+        {% endif %}
+        {% csrf_token %}
+        {{ answer_form.as_p }}
+        <button type="submit" class="btn btn-success">Answer</button>
+    </form>
+{% endif %}
